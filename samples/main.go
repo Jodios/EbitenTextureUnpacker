@@ -6,13 +6,14 @@ import (
 	"os"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/jodios/ebitentextureunpacker"
 )
 
 var sprites map[string]*ebiten.Image
 var spriteNames []string
 
 func init() {
-	unpacker := &Unpacker{
+	unpacker := &ebitentextureunpacker.Unpacker{
 		Filesystem: os.DirFS("./samples/assets"),
 	}
 	var err error
@@ -45,7 +46,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	opts := &ebiten.DrawImageOptions{}
 	var y float64 = 0
 	for i := 0; i < len(spriteNames); i++ {
-		opts.GeoM.Translate(13, 0)
+		opts.GeoM.Translate(29, 0)
 		if i%4 == 0 {
 			opts.GeoM.Reset()
 			opts.GeoM.Translate(0, y)

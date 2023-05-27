@@ -13,12 +13,12 @@ First generate the packed PNG file and place the json and PNG file wherever you 
 Add this package to your project.
 
 ```bash
-go get github.com/Jodios/EbitenTextureUnpacker
+go get github.com/jodios/ebitentextureunpacker
 ```
 
 Create an Unpacker with the path to your assets folder and 
 call the Unpack function.
-```golang
+```golangj
 func init() {
 	unpacker := &Unpacker{
 		Filesystem: os.DirFS("./samples/assets"),
