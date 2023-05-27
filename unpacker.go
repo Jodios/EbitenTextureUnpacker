@@ -74,7 +74,7 @@ func (unpacker *Unpacker) Unpack(path string) (map[string]*ebiten.Image, error) 
 	ebitenSpriteSheetImage := ebiten.NewImageFromImage(spriteSheetImage)
 	bounds := ebitenSpriteSheetImage.Bounds()
 	for _, s := range texturePackerJSONArray.Frames {
-		sprite := ebitenSpriteSheetImage.SubImage(image.Rectangle{
+		sprites[s.Filename] = ebitenSpriteSheetImage.SubImage(image.Rectangle{
 			Min: image.Point{
 				X: bounds.Min.X + s.Frame.X,
 				Y: bounds.Min.Y + s.Frame.Y,
@@ -83,8 +83,7 @@ func (unpacker *Unpacker) Unpack(path string) (map[string]*ebiten.Image, error) 
 				X: bounds.Min.X + s.Frame.X + s.Frame.W,
 				Y: bounds.Min.Y + s.Frame.Y + s.Frame.H,
 			},
-		})
-		sprites[s.Filename] = ebiten.NewImageFromImage(sprite)
+		}).(*ebiten.Image)
 	}
 
 	return sprites, nil
