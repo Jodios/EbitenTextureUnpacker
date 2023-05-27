@@ -1,4 +1,4 @@
-[![Go Reference](https://pkg.go.dev/badge/github.com/Jodios/EbitenTextureUnpacker#section-readme.svg)](https://pkg.go.dev/github.com/Jodios/EbitenTextureUnpacker#section-readme)
+[![Go Reference](https://pkg.go.dev/badge/github.com/jodios/ebitentextureunpacker.svg)](https://pkg.go.dev/github.com/jodios/ebitentextureunpacker)
 # EbitenTextureUnpacker
 
 Purpose of this library is to unpack sprite sheets packed using 
