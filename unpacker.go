@@ -88,4 +88,5 @@ func (unpacker *Unpacker) Unpack(path string) (map[string]*ebiten.Image, error) 
 	}
 
 	return sprites, nil
+
 }
