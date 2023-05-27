@@ -9,7 +9,7 @@ import (
 	"github.com/jodios/ebitentextureunpacker"
 )
 
-var sprites map[string]*ebiten.Image
+var sprites map[string]ebitentextureunpacker.ImageWithFrameDetails
 var spriteNames []string
 
 func init() {
@@ -17,7 +17,7 @@ func init() {
 		Filesystem: os.DirFS("./samples/assets"),
 	}
 	var err error
-	sprites, err = unpacker.Unpack("sample_spritesheet.json")
+	sprites, err = unpacker.UnpackWithFrameDetails("sample_spritesheet.json")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -52,7 +52,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 			opts.GeoM.Translate(0, y)
 			y += 16
 		}
-		screen.DrawImage(sprites[spriteNames[i]], opts)
+		screen.DrawImage(sprites[spriteNames[i]].Image, opts)
 	}
 
 }
