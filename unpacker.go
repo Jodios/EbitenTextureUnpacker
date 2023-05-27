@@ -48,7 +48,7 @@ type TexturePackerFrame struct {
 
 type ImageWithFrameDetails struct {
 	Image     *ebiten.Image
-	FrameData *TexturePackerFrame
+	FrameData TexturePackerFrame
 }
 
 type Unpacker struct {
@@ -74,7 +74,7 @@ func (unpacker *Unpacker) UnpackWithFrameDetails(path string) (map[string]ImageW
 					Y: bounds.Min.Y + s.Frame.Y + s.Frame.H,
 				},
 			}).(*ebiten.Image),
-			FrameData: &s,
+			FrameData: s,
 		}
 	}
 	return sprites, nil
