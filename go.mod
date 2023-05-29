@@ -1,4 +1,4 @@
-module github.com/jodios/ebitentextureunpacker
+module github.com/jodios/ebitentextureunpacker/v2
 
 go 1.20
 
