@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/jodios/ebitentextureunpacker/v2"
-	"github.com/jodios/ebitentextureunpacker/v2/samples/assets"
+	"github.com/jodios/ebitentextureunpacker"
+	"github.com/jodios/ebitentextureunpacker/samples/assets"
 	"log"
 )
 
