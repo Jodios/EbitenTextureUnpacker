@@ -13,7 +13,7 @@ First generate the packed PNG file and place the json and PNG file wherever you 
 Add this package to your project.
 
 ```bash
-go get github.com/jodios/ebitentextureunpacker
+go get github.com/jodios/ebitentextureunpacker/v2
 ```
 
 Create an embed file to embed all of your assets into the actual  executable
