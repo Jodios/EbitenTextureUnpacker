@@ -16,15 +16,29 @@ Add this package to your project.
 go get github.com/jodios/ebitentextureunpacker
 ```
 
+Create an embed file to embed all of your assets into the actual  executable
+of your game. 
+```go
+package assets
+import (
+	_ "embed"
+)
+var (
+	//go:embed sample_spritesheet.json
+	Spritesheet_JSON []byte
+	//go:embed sample_spritesheet.png
+	Spritesheet_PNG []byte
+)
+```  
+  
+
 Create an Unpacker with the path to your assets folder and 
 call the Unpack function.
-```golangj
+```go
 func init() {
-	unpacker := &Unpacker{
-		Filesystem: os.DirFS("./samples/assets"),
-	}
+	unpacker := &Unpacker{}
 	var err error
-	sprites, err = unpacker.Unpack("sample_spritesheet.json")
+	sprites, err = unpacker.Unpack(assets.Spritesheet_JSON, assets.Spritesheet_PNG)
 	if err != nil {
 		log.Fatal(err)
 	}

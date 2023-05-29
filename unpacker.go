@@ -1,12 +1,11 @@
 package ebitentextureunpacker
 
 import (
+	"bytes"
 	"encoding/json"
+	"github.com/hajimehoshi/ebiten/v2"
 	"image"
 	_ "image/png"
-	"io/fs"
-
-	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type TexturePackerJSONArray struct {
@@ -51,13 +50,11 @@ type ImageWithFrameDetails struct {
 	FrameData TexturePackerFrame
 }
 
-type Unpacker struct {
-	Filesystem fs.FS
-}
+type Unpacker struct{}
 
-func (unpacker *Unpacker) UnpackWithFrameDetails(path string) (map[string]ImageWithFrameDetails, error) {
+func (unpacker *Unpacker) UnpackWithFrameDetails(arrayFile []byte, packedImage []byte) (map[string]ImageWithFrameDetails, error) {
 	sprites := make(map[string]ImageWithFrameDetails)
-	ebitenSpriteSheetImage, texturePackerJSONArray, err := unpacker.parse(path)
+	ebitenSpriteSheetImage, texturePackerJSONArray, err := unpacker.parse(arrayFile, packedImage)
 	if err != nil {
 		return nil, err
 	}
@@ -80,9 +77,9 @@ func (unpacker *Unpacker) UnpackWithFrameDetails(path string) (map[string]ImageW
 	return sprites, nil
 }
 
-func (unpacker *Unpacker) Unpack(path string) (map[string]*ebiten.Image, error) {
+func (unpacker *Unpacker) Unpack(arrayFile []byte, packedImage []byte) (map[string]*ebiten.Image, error) {
 	sprites := make(map[string]*ebiten.Image)
-	ebitenSpriteSheetImage, texturePackerJSONArray, err := unpacker.parse(path)
+	ebitenSpriteSheetImage, texturePackerJSONArray, err := unpacker.parse(arrayFile, packedImage)
 	if err != nil {
 		return nil, err
 	}
@@ -102,22 +99,14 @@ func (unpacker *Unpacker) Unpack(path string) (map[string]*ebiten.Image, error) 
 	return sprites, nil
 }
 
-func (unpacker *Unpacker) parse(path string) (*ebiten.Image, *TexturePackerJSONArray, error) {
-	f, err := unpacker.Filesystem.Open(path)
-	if err != nil {
-		return nil, nil, err
-	}
-	defer f.Close()
+func (unpacker *Unpacker) parse(arrayFile []byte, packedImage []byte) (*ebiten.Image, *TexturePackerJSONArray, error) {
 	texturePackerJSONArray := new(TexturePackerJSONArray)
-	json.NewDecoder(f).Decode(texturePackerJSONArray)
-
-	spriteSheet, err := unpacker.Filesystem.Open(texturePackerJSONArray.Meta.Image)
+	err := json.Unmarshal(arrayFile, texturePackerJSONArray)
 	if err != nil {
 		return nil, nil, err
 	}
-	defer spriteSheet.Close()
 
-	spriteSheetImage, _, err := image.Decode(spriteSheet)
+	spriteSheetImage, _, err := image.Decode(bytes.NewReader(packedImage))
 	if err != nil {
 		return nil, nil, err
 	}

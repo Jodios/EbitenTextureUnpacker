@@ -2,22 +2,19 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os"
-
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/jodios/ebitentextureunpacker"
+	"github.com/jodios/ebitentextureunpacker/samples/assets"
+	"log"
 )
 
 var sprites map[string]ebitentextureunpacker.ImageWithFrameDetails
 var spriteNames []string
 
 func init() {
-	unpacker := &ebitentextureunpacker.Unpacker{
-		Filesystem: os.DirFS("./samples/assets"),
-	}
+	unpacker := &ebitentextureunpacker.Unpacker{}
 	var err error
-	sprites, err = unpacker.UnpackWithFrameDetails("sample_spritesheet.json")
+	sprites, err = unpacker.UnpackWithFrameDetails(assets.Spritesheet_JSON, assets.Spritesheet_PNG)
 	if err != nil {
 		log.Fatal(err)
 	}
